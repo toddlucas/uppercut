@@ -1,0 +1,122 @@
+<!DOCTYPE html>  <html> <head>   <title>uppercut.knockout.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               uppercut.knockout.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <pre><code>Uppercut.Knockout.js 0.1.0
+Copyright (c) 2012 Todd Lucas
+Uppercut.Knockout may be freely distributed under the MIT license.
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p><strong>Uppercut.Knockout</strong> implements a set of models and collections that
+are compatible with <a href="http://knockoutjs.com">Knockout.js</a>.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h2>Setup</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+
+<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">uc</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">uc</span><span class="p">.</span><span class="nx">Knockout</span> <span class="o">=</span> <span class="nx">uc</span><span class="p">.</span><span class="nx">ko</span> <span class="o">=</span> <span class="p">{};</span>
+    
+</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <h2>Uppercut.Knockout.Model</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Implements a Knockout compatible <code>Uppercut.Model</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">uc</span><span class="p">.</span><span class="nx">Knockout</span><span class="p">.</span><span class="nx">Model</span> <span class="o">=</span> <span class="nx">Uppercut</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">derive</span><span class="p">({</span>
+        <span class="nx">getId</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">id</span> <span class="o">&amp;&amp;</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">isSubscribable</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">id</span><span class="p">))</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">id</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Performs a shallow copy. To handle deep copying, the
+model may provide its own set method.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">set</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">setModel</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">},</span>
+
+        <span class="nx">get</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">getModel</span><span class="p">({},</span> <span class="k">this</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <h2>Uppercut.Knockout.ModelAdapter</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Knockout models can be simple JavaScript objects defined in terms
+of a constructor function. Those models may be wrapped with
+an <code>Uppercut.Knockout.ModelAdapter</code> to access the features of
+Uppercut without alterning their Knockout model representation.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">uc</span><span class="p">.</span><span class="nx">Knockout</span><span class="p">.</span><span class="nx">ModelAdapter</span> <span class="o">=</span> <span class="nx">uc</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">derive</span><span class="p">({</span>
+        <span class="nx">init</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">model</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">url</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">url</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+
+        <span class="nx">getId</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">id</span> <span class="o">&amp;&amp;</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">isSubscribable</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">id</span><span class="p">))</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">id</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+        <span class="p">},</span>
+
+        <span class="nx">getUrl</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">url</span><span class="p">;</span>
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Performs a shallow copy. To handle deep copying, the
+model may provide its own set method.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">set</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">setModel</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">},</span>
+
+        <span class="nx">get</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">getModel</span><span class="p">({},</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+    
+</pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <h2>Uppercut.Knockout.Collection</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>Implements a Knockout compatible <code>Uppercut.Collection</code>.
+The <code>models</code> property is a <code>ko.observableArray</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">uc</span><span class="p">.</span><span class="nx">Knockout</span><span class="p">.</span><span class="nx">Collection</span> <span class="o">=</span> <span class="nx">uc</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">derive</span><span class="p">({</span>
+        <span class="nx">clear</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">models</span> <span class="o">||</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">models</span> <span class="o">=</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">observableArray</span><span class="p">());</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">models</span><span class="p">.</span><span class="nx">removeAll</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <h2>Helpers</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+
+</pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Copies any non-function properties to the model, observing observable conventions.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="kd">var</span> <span class="nx">setModel</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">model</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">name</span> <span class="k">in</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">src</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="nx">name</span><span class="p">];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">Uppercut</span><span class="p">.</span><span class="nx">isFunction</span><span class="p">(</span><span class="nx">src</span><span class="p">))</span> <span class="p">{</span>
+                <span class="k">continue</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">model</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">name</span><span class="p">))</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">prop</span> <span class="o">=</span> <span class="nx">model</span><span class="p">[</span><span class="nx">name</span><span class="p">];</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">prop</span> <span class="o">&amp;&amp;</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">isSubscribable</span><span class="p">(</span><span class="nx">prop</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="nx">prop</span><span class="p">(</span><span class="nx">src</span><span class="p">);</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="nx">model</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">src</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">model</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">src</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nx">model</span><span class="p">;</span>
+    <span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Copies any model properties and values of observable properties to an object.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="kd">var</span> <span class="nx">getModel</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">model</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">name</span> <span class="k">in</span> <span class="nx">model</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">prop</span> <span class="o">=</span> <span class="nx">model</span><span class="p">[</span><span class="nx">name</span><span class="p">];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">prop</span> <span class="o">&amp;&amp;</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">isSubscribable</span><span class="p">(</span><span class="nx">prop</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nx">data</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">prop</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Uppercut</span><span class="p">.</span><span class="nx">isFunction</span><span class="p">(</span><span class="nx">prop</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nx">data</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">prop</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nx">data</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">})(</span><span class="nx">Uppercut</span><span class="p">,</span> <span class="nx">jQuery</span> <span class="o">||</span> <span class="nx">Zepto</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
