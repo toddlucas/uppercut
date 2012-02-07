@@ -7,28 +7,6 @@ $(function() {
         }
     });
    
-    $.mockjax({
-        url: '/api/testmodel',
-        type: 'get',
-        responseText: [
-            {   id: 1,
-                name: 'name one'
-            },
-            {   id: 2,
-                name: 'name two'
-            },
-        ]
-    });
-    
-    $.mockjax({
-        url: '/api/testmodel',
-        type: 'post',
-        responseText: {
-            id: 3,
-            name: 'new model'
-        }
-    });
-
     test('Collection.append', function () {
         var collection = new Uppercut.Knockout.Collection();
         
@@ -59,7 +37,7 @@ $(function() {
         equals(collection.models()[1].id(), 2);
     });
     
-    test('Endpoint.fetch', function () {
+    asyncTest('Endpoint.fetch', function () {
         var ep = new Uppercut.Endpoint();
         var collection = new Uppercut.Knockout.Collection();
         
@@ -68,14 +46,16 @@ $(function() {
             model: TestModel,
             success: function(coll) {
                 equals(coll.models()[0].id(), 1);
-                equals(coll.models()[0].name, 'name one');
+                equals(coll.models()[0].name(), 'name one');
                 equals(coll.models()[1].id(), 2);
-                equals(coll.models()[1].name, 'name two');
+                equals(coll.models()[1].name(), 'name two');
+                equals(coll.models().length, 2);
+                start();
             }
         });
     });
     
-    test('Endpoint.add', function () {
+    asyncTest('Endpoint.add', function () {
         var ep = new Uppercut.Endpoint();
         var collection = new Uppercut.Knockout.Collection(null, { url: '/api/testmodel' });
         
@@ -83,21 +63,23 @@ $(function() {
         ep.add(collection, m1, {
             success: function(coll, model) {
                 equals(model.id(), 3);
-                equals(coll.models().length, 3);
+                equals(coll.models().length, 1);
+                start();
             }
         });
     });
     
-    test('Endpoint.fetch and .add', function () {
+    asyncTest('Endpoint.fetch and .add', function () {
         var ep = new Uppercut.Endpoint();
         var collection = new Uppercut.Knockout.Collection(null, { url: '/api/testmodel', model: TestModel });
         
         ep.fetch(collection, {
             success: function(coll) {
                 equals(coll.models()[0].id(), 1);
-                equals(coll.models()[0].name, 'name one');
+                equals(coll.models()[0].name(), 'name one');
                 equals(coll.models()[1].id(), 2);
-                equals(coll.models()[1].name, 'name two');
+                equals(coll.models()[1].name(), 'name two');
+                start();
             }
         });
 
@@ -107,11 +89,12 @@ $(function() {
             success: function(coll, model) {
                 equals(model.id(), 3);
                 equals(coll.models().length, 3);
+                start();
             }
         });
     });
     
-    test('Endpoint.add and .fetch', function () {
+    asyncTest('Endpoint.add and .fetch', function () {
         var ep = new Uppercut.Endpoint();
         var collection = new Uppercut.Knockout.Collection(null, { url: '/api/testmodel', model: TestModel });
 
@@ -121,20 +104,23 @@ $(function() {
             success: function(coll, model) {
                 equals(model.id(), 3);
                 equals(coll.models().length, 1);
+                start();
             }
         });
         
         ep.fetch(collection, {
             success: function(coll) {
                 equals(coll.models()[0].id(), 1);
-                equals(coll.models()[0].name, 'name one');
+                equals(coll.models()[0].name(), 'name one');
                 equals(coll.models()[1].id(), 2);
-                equals(coll.models()[1].name, 'name two');
+                equals(coll.models()[1].name(), 'name two');
+                equals(coll.models().length, 2);
+                start();
             }
         });
     });
 
-    test('Endpoint.add and .fetch with append', function () {
+    asyncTest('Endpoint.add and .fetch with append', function () {
         var ep = new Uppercut.Endpoint();
         var collection = new Uppercut.Knockout.Collection(null, { url: '/api/testmodel', model: TestModel });
 
@@ -144,16 +130,21 @@ $(function() {
             success: function(coll, model) {
                 equals(model.id(), 3);
                 equals(coll.models().length, 1);
+                start();
             }
         });
         
         ep.fetch(collection, {
             append: true,
             success: function(coll) {
+                equals(coll.models()[0].id(), 3);
+                equals(coll.models()[0].name(), 'new model');
                 equals(coll.models()[1].id(), 1);
-                equals(coll.models()[1].name, 'name one');
+                equals(coll.models()[1].name(), 'name one');
                 equals(coll.models()[2].id(), 2);
-                equals(coll.models()[2].name, 'name two');
+                equals(coll.models()[2].name(), 'name two');
+                equals(coll.models().length, 3);
+                start();
             }
         });
     });

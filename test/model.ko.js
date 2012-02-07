@@ -7,24 +7,16 @@ $(function() {
         }
     });
    
-    $.mockjax({
-        url: '/api/testmodel/1',
-        responseText: {
-            id: 1,
-            name: 'test name'
-        }
-    });
-    
-    test('Model read', function () {
+    asyncTest('Model read', function () {
         var m1 = new TestModel({ id: 1, name: "m1" });
         
         var ep = new Uppercut.Endpoint({ url: '/api/testmodel' });
         
         ep.read(m1, {
             success: function(model) {
-                equals(model.name, 'test name');
+                equals(model.name(), 'test name');
+                start();
             }
         });
-        
     });
 });
